@@ -2,7 +2,7 @@ module Euclid where
 
 open import Function.Base using (_∘_; _∘₂_)
 open import Data.Nat using (ℕ; suc; _+_; _≤_; z≤n; s≤s; _≰_; _<_; _≤′_; ≤′-refl; ≤′-step; _!)
-open import Data.Nat.Properties using (+-comm; 1+n≰n; n≮0; n<1+n; 1≤n!; ≰⇒≥; ≤-refl; ≤-trans; ≤⇒≤′)
+open import Data.Nat.Properties using (+-comm; 1+n≰n; n≮0; n<1+n; 1≤n!; ≰⇒>; ≤-refl; ≤-trans; ≤⇒≤′)
 open import Data.Nat.Induction using (<-rec)
 open import Data.Nat.Divisibility using (_∣_; ∣-refl; ∣-trans; ∣1⇒≡1; ∣m+n∣m⇒∣n; ∣m∣n⇒∣m+n; m∣m*n; ∣n⇒∣m*n)
 open import Data.Nat.Primality using (Prime; Composite; prime?; ¬prime⇒composite)
@@ -39,8 +39,8 @@ small-divisor-! 1≤k k≤n = small-divisor′ 1≤k (≤⇒≤′ k≤n) where
     1+k∣n! : 1 + k ∣ n !
     1+k∣n! = small-divisor′ 1≤1+k 1+k≤n
 
-large-divisor-! : ∀ {k n} → 2 ≤ k → k ∣ 1 + n ! → n ≤ k
-large-divisor-! = ≰⇒≥ ∘₂ large-divisor′ where
+large-divisor-! : ∀ {k n} → 2 ≤ k → k ∣ 1 + n ! → n < k
+large-divisor-! = ≰⇒> ∘₂ large-divisor′ where
   large-divisor′ : ∀ {k n} → 2 ≤ k → k ∣ 1 + n ! → k ≰ n
   large-divisor′ {k} {n} 2≤k k∣1+n! = qed where
     qed : k ≰ n
@@ -57,7 +57,7 @@ prime≥2 {0} = ⊥-elim
 prime≥2 {1} = ⊥-elim
 prime≥2 {suc (suc _)} _ = s≤s (s≤s z≤n)
 
-infinite-primes : ∀ n → ∃[ k ] Prime k × n ≤ k
+infinite-primes : ∀ n → ∃[ k ] Prime k × n < k
 infinite-primes n = next-prime (prime-divisor (1 + n !) (s≤s (1≤n! n))) where
-  next-prime : Has-Prime-Divisor (1 + n !) → ∃[ k ] Prime k × n ≤ k
+  next-prime : Has-Prime-Divisor (1 + n !) → ∃[ k ] Prime k × n < k
   next-prime (p , (prime-p , p∣1+n!)) = (p , prime-p , large-divisor-! (prime≥2 prime-p) p∣1+n!)
