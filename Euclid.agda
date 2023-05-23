@@ -34,7 +34,7 @@ prime-divisor (suc (suc n)) _ = <-rec _ go n where
 small-divisor : ∀ {k n} → 1 ≤ k → k ≤ n → k ∣ n !
 small-divisor 1≤k k≤n = small-divisor′ 1≤k (≤⇒≤′ k≤n) where
   small-divisor′ : ∀ {k n} → 1 ≤ k → k ≤′ n → k ∣ n !
-  small-divisor′ {0} {n} = {!!}
+  small-divisor′ {0} {n} 1≤0 = ⊥-elim (1+n≰n 1≤0)
   small-divisor′ {suc k} _ ≤′-refl = m∣m*n (k !)
   small-divisor′ {suc k} {suc n} 1≤1+k (≤′-step 1+k≤n) = ∣m∣n⇒∣m+n  1+k∣n! (∣n⇒∣m*n n 1+k∣n!) where
     1+k∣n! : 1 + k ∣ n !
