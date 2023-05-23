@@ -7,9 +7,9 @@ The approach of the proof is the standard one: for a given number $n$, we find a
 
 There are two features of the proof that depend heavily on functions in the standard library, which are not obvious from the get-go.
 
-1. Finding a prime divisor requires *strong* induction (`<-rec`) since it requires recursing on divisors, not predecessors. It is a straightforward exercise to prove the strong induction principle for $\mathbb N$ in Agda.
+1. Finding a prime divisor requires *strong* induction (`<-rec`) since it requires recursing on divisors, not predecessors. It is a good exercise to prove the strong induction principle for $\mathbb N$ in Agda.
 
-2. Proving that a non-prime number is composite (`¬prime⇒composite`) requires commuting negation with bounded quantification over decidable predicates.
+2. Proving that a non-prime number is composite (`¬prime⇒composite`) requires commuting negation with bounded quantifers over decidable predicates.
    This is mildy tricky to do bespoke, but also a good exercise.
    
 
