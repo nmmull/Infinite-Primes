@@ -3,7 +3,7 @@
 I was generally unsatisfied with the constructive proofs of [Euclid's Theorem](https://en.wikipedia.org/wiki/Euclid%27s_theorem) written in Agda I could find on the internet, so I decided to write my own.
 The aim was for it to be simultaeously simple and pedagogically useful.
 This meant taking advantage of the standard library as much as possible, but not in a way that obfuscated the nature of the proof.
-The approach of the proof is the standard one: for a given number $n$, we find a prime divisor of $1 + n!$, which we can then prove must be greater than $n$.
+The approach taken here is the standard one: for a given number $n$, we find a prime divisor of $1 + n!$, which we can then prove must be greater than $n$.
 
 There are two features of the proof that depend heavily on functions in the standard library, which are not obvious from the get-go.
 
