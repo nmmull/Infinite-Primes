@@ -19,14 +19,14 @@ prime-divisor : ∀ n → 2 ≤ n → Has-Prime-Divisor n
 prime-divisor 1 = ⊥-elim ∘ 1+n≰n
 prime-divisor (suc (suc n)) _ = <-rec _ go n where
   go : ∀ k → (∀ i → i < k → Has-Prime-Divisor (2 + i)) → Has-Prime-Divisor (2 + k)
-  go k strong-ih with prime? (2 + k)
-  go k strong-ih | yes prime-2+k = (2 + k , prime-2+k , ∣-refl)
-  go k strong-ih | no ¬prime-2+k = composite⇒prime-divisor (¬prime⇒composite (s≤s (s≤s z≤n)) ¬prime-2+k) where
-    strong-ih′ : ∀ i → 2 ≤ i → i < 2 + k → Has-Prime-Divisor i
-    strong-ih′ 1 = ⊥-elim ∘ 1+n≰n
-    strong-ih′ (suc (suc i)) _ (s≤s (s≤s i<k)) = strong-ih i i<k
+  go k prf with prime? (2 + k)
+  go k prf | yes prime-2+k = (2 + k , prime-2+k , ∣-refl)
+  go k prf | no ¬prime-2+k = composite⇒prime-divisor (¬prime⇒composite (s≤s (s≤s z≤n)) ¬prime-2+k) where
+    prf′ : ∀ i → 2 ≤ i → i < 2 + k → Has-Prime-Divisor i
+    prf′ 1 = ⊥-elim ∘ 1+n≰n
+    prf′ (suc (suc i)) _ (s≤s (s≤s i<k)) = prf i i<k
     composite⇒prime-divisor : Composite (2 + k) → Has-Prime-Divisor (2 + k)
-    composite⇒prime-divisor (d , (2≤d , (d<2+k , d∣2+k))) = prime-divisor-d⇒prime-divisor-2+k (strong-ih′ d 2≤d d<2+k)  where
+    composite⇒prime-divisor (d , (2≤d , (d<2+k , d∣2+k))) = prime-divisor-d⇒prime-divisor-2+k (prf′ d 2≤d d<2+k)  where
       prime-divisor-d⇒prime-divisor-2+k : Has-Prime-Divisor d → Has-Prime-Divisor (2 + k)
       prime-divisor-d⇒prime-divisor-2+k (p , (prime-p , p∣d)) = (p , prime-p , ∣-trans p∣d d∣2+k)
 
